@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    container_name: 'citai-postgres'
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: citai
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      restart: unless-stopped
+
+  postgres-test:
+    image: postgres
+    container_name: 'citai-postgres-test'
+    ports:
+      - 5431:5432
+    environment:
+      POSTGRES_DB: citai_test
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: 'pg-admin-citai'
+    depends_on:
+      - postgres
+    ports:
+      - '5555:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: 'citai-redis'
+    environment:
+      REDIS_PASSWORD: ${CACHE_PASSWORD}
+    ports:
+      - 6379:6379
+
+volumes:
+  postgres-data:
