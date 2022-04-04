@@ -12,7 +12,6 @@ from .serializers import CategorySerializer, ChannelSerializer, CitationSerializ
 class CategoryApiView(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    pagination_class = PageNumberPagination
 
 class CitationApiView(ListAPIView):
     queryset = Citation.objects.all()
