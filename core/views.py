@@ -1,8 +1,10 @@
 # from django.utils.decorators import method_decorator
 # from django.views.decorators.cache import cache_page
+from unicodedata import category
 from rest_framework.generics import ListAPIView
 # from django.conf import settings
 from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Category, Channel, Citation, Ebook, EntranceExam, EssayTheme, Notice, Pop, Video
 from .serializers import CategorySerializer, ChannelSerializer, CitationSerializer, EbookSerializer, EntranceExamSerializer, EssayThemeSerializer, NoticeSerializer, PopSerializer, VideoSerializer
@@ -23,16 +25,22 @@ class CitationApiView(ListAPIView):
     queryset = Citation.objects.all()
     serializer_class = CitationSerializer
     pagination_class = PageNumberPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category']
 
 class PopApiView(ListAPIView):
     queryset = Pop.objects.all()
     serializer_class = PopSerializer
     pagination_class = PageNumberPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category']
 
 class EssayThemeApiView(ListAPIView):
     queryset = EssayTheme.objects.all()
     serializer_class = EssayThemeSerializer
     pagination_class = PageNumberPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['entrance_exam']
 
 class ChannelApiView(ListAPIView):
     queryset = Channel.objects.all()
