@@ -4,14 +4,19 @@ from rest_framework.generics import ListAPIView
 # from django.conf import settings
 from rest_framework.pagination import PageNumberPagination
 
-from .models import Category, Channel, Citation, Ebook, EssayTheme, Notice, Pop, Video
-from .serializers import CategorySerializer, ChannelSerializer, CitationSerializer, EbookSerializer, EssayThemeSerializer, NoticeSerializer, PopSerializer, VideoSerializer
+from .models import Category, Channel, Citation, Ebook, EntranceExam, EssayTheme, Notice, Pop, Video
+from .serializers import CategorySerializer, ChannelSerializer, CitationSerializer, EbookSerializer, EntranceExamSerializer, EssayThemeSerializer, NoticeSerializer, PopSerializer, VideoSerializer
 
 # CACHE_TTL = getattr(settings, "CACHE_TTL", None)
 
 class CategoryApiView(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    pagination_class = None
+
+class EntranceExamApiView(ListAPIView):
+    queryset = EntranceExam.objects.all()
+    serializer_class = EntranceExamSerializer
     pagination_class = None
 
 class CitationApiView(ListAPIView):
