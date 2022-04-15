@@ -31,12 +31,26 @@ class PopSerializer(serializers.ModelSerializer):
         model = Pop
         fields = ['id', 'context', 'reflexion', 'origin', 'type_origin', 'author', 'category']
 
+class BasicEssayThemeSerializer(serializers.ModelSerializer):
+    entrance_exam = EntranceExamSerializer()
+    class Meta:
+        model = EssayTheme
+        fields = ['id', 'title', 'cover', 'entrance_exam', 'views','is_new']
+    
+    is_new = serializers.SerializerMethodField(read_only=True)
+
+    def get_is_new(self, essay_theme):
+        dateTwo = essay_theme.created_at.replace(tzinfo=None)
+        dateOne = datetime.now()
+        days = abs((dateTwo - dateOne).days)
+        return days <= 7
+
 class EssayThemeSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     entrance_exam = EntranceExamSerializer()
     class Meta:
         model = EssayTheme
-        fields = ['id', 'title', 'url', 'category', 'entrance_exam', 'is_new']
+        fields = ['id', 'title', 'url', 'category', 'cover', 'entrance_exam', 'views','is_new']
     
     is_new = serializers.SerializerMethodField(read_only=True)
 

@@ -1,13 +1,13 @@
 # from django.utils.decorators import method_decorator
 # from django.views.decorators.cache import cache_page
-from unicodedata import category
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 # from django.conf import settings
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Category, Channel, Citation, Ebook, EntranceExam, EssayTheme, Notice, Pop, Video
-from .serializers import CategorySerializer, ChannelSerializer, CitationSerializer, EbookSerializer, EntranceExamSerializer, EssayThemeSerializer, NoticeSerializer, PopSerializer, VideoSerializer
+from .serializers import BasicEssayThemeSerializer, CategorySerializer, ChannelSerializer, CitationSerializer, EbookSerializer, EntranceExamSerializer, EssayThemeSerializer, NoticeSerializer, PopSerializer, VideoSerializer
 
 # CACHE_TTL = getattr(settings, "CACHE_TTL", None)
 
@@ -37,10 +37,21 @@ class PopApiView(ListAPIView):
 
 class EssayThemeApiView(ListAPIView):
     queryset = EssayTheme.objects.all()
-    serializer_class = EssayThemeSerializer
+    serializer_class = BasicEssayThemeSerializer
     pagination_class = PageNumberPagination
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ['entrance_exam']
+    ordering_fields = ['views']
+
+class OneEssayThemeApiView(RetrieveAPIView):
+    queryset = EssayTheme.objects.all()
+    serializer_class = EssayThemeSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        obj = self.get_object()
+        obj.views = obj.views + 1
+        obj.save(update_fields=("views", ))
+        return super().retrieve(request, *args, **kwargs)
 
 class ChannelApiView(ListAPIView):
     queryset = Channel.objects.all()

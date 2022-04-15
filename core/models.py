@@ -47,6 +47,7 @@ class EssayTheme(models.Model):
     cover = models.ImageField(blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     entrance_exam = models.ForeignKey(EntranceExam, on_delete=models.CASCADE)
+    views = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
