@@ -6,7 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Category, Channel, Citation, Ebook, EntranceExam, EssayTheme, Notice, Pop, Video
+from .models import Category, Channel, Citation, Ebook, EntranceExam, EssayTheme, ExemplaryEssay, Notice, Pop, Video
 from .serializers import BasicEssayThemeSerializer, CategorySerializer, ChannelSerializer, CitationSerializer, EbookSerializer, EntranceExamSerializer, EssayThemeSerializer, NoticeSerializer, PopSerializer, VideoSerializer
 
 # CACHE_TTL = getattr(settings, "CACHE_TTL", None)
@@ -40,7 +40,7 @@ class EssayThemeApiView(ListAPIView):
     serializer_class = BasicEssayThemeSerializer
     pagination_class = PageNumberPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ['entrance_exam']
+    filterset_fields = ['entrance_exam', 'category']
     ordering_fields = ['views']
 
 class OneEssayThemeApiView(RetrieveAPIView):
@@ -72,7 +72,15 @@ class NoticeApiView(ListAPIView):
     queryset = Notice.objects.all()
     serializer_class = NoticeSerializer
     pagination_class = PageNumberPagination
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['created_at']
+    ordering = ['-created_at']
 
     # @method_decorator(cache_page(CACHE_TTL))
     # def get(self, *args, **kwargs):
     #     return super().get(*args, **kwargs)
+
+class ExemplaryEssayApiView(ListAPIView):
+    queryset = ExemplaryEssay.objects.all()
+    serializer_class = NoticeSerializer
+    pagination_class = PageNumberPagination

@@ -82,10 +82,18 @@ class Ebook(models.Model):
         return self.title
 
 class Notice(models.Model):
-    title = models.CharField(max_length=200)
     text = models.TextField(max_length=500)
+    image = models.ImageField(blank=True,)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return self.text
+
+class ExemplaryEssay(models.Model):
+    text = models.TextField()
+    theme = models.CharField(max_length=300)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.theme
         

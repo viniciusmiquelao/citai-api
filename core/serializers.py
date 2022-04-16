@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from datetime import datetime
-from .models import Category, Channel, Citation, Ebook, EntranceExam, EssayTheme, Notice, Pop, TypeOrigin, Video
+from .models import Category, Channel, Citation, Ebook, EntranceExam, EssayTheme, ExemplaryEssay, Notice, Pop, TypeOrigin, Video
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,7 +35,7 @@ class BasicEssayThemeSerializer(serializers.ModelSerializer):
     entrance_exam = EntranceExamSerializer()
     class Meta:
         model = EssayTheme
-        fields = ['id', 'title', 'cover', 'entrance_exam', 'views','is_new']
+        fields = ['id', 'title', 'cover', 'entrance_exam', 'category', 'views','is_new']
     
     is_new = serializers.SerializerMethodField(read_only=True)
 
@@ -77,6 +77,12 @@ class EbookSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'url', 'cover_url']
 
 class NoticeSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(required=False, max_length=None, allow_empty_file=True, use_url=True)
     class Meta:
         model = Notice
-        fields = ['id', 'title', 'text', 'created_at']
+        fields = ['id', 'text', 'image', 'created_at']
+
+class ExemplaryEssaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExemplaryEssay
+        fields = ['id', 'text', 'theme', 'created_at']

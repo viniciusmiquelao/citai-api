@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
-from core.views import CategoryApiView, CitationApiView, EbookApiView, EntranceExamApiView,  EssayThemeApiView, NoticeApiView, OneEssayThemeApiView, PopApiView, VideoApiView
+from core.views import CategoryApiView, CitationApiView, EbookApiView, EntranceExamApiView,  EssayThemeApiView, ExemplaryEssayApiView, NoticeApiView, OneEssayThemeApiView, PopApiView, VideoApiView
 
 urlpatterns = [
     path('categories/', CategoryApiView.as_view()),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('entrance_exams/', EntranceExamApiView.as_view()),
     path('essay_themes/', EssayThemeApiView.as_view()),
     path('essay_themes/<pk>', OneEssayThemeApiView.as_view()),
+    path('exemplary_essays/', ExemplaryEssayApiView.as_view()),
     path('notices/', NoticeApiView.as_view()),
     path('pops/', PopApiView.as_view()),
     path('videos/', VideoApiView.as_view()),
