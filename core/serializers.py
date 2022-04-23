@@ -33,6 +33,7 @@ class PopSerializer(serializers.ModelSerializer):
 
 class BasicEssayThemeSerializer(serializers.ModelSerializer):
     entrance_exam = EntranceExamSerializer()
+    category = CategorySerializer()
     class Meta:
         model = EssayTheme
         fields = ['id', 'title', 'cover', 'entrance_exam', 'category', 'views','is_new']
