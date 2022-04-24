@@ -7,7 +7,7 @@ from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Category, Channel, Citation, Ebook, EntranceExam, EssayTheme, ExemplaryEssay, Notice, Pop, Video
-from .serializers import BasicEssayThemeSerializer, CategorySerializer, ChannelSerializer, CitationSerializer, EbookSerializer, EntranceExamSerializer, EssayThemeSerializer, NoticeSerializer, PopSerializer, VideoSerializer
+from .serializers import BasicEssayThemeSerializer, CategorySerializer, ChannelSerializer, CitationSerializer, EbookSerializer, EntranceExamSerializer, EssayThemeSerializer, ExemplaryEssaySerializer, NoticeSerializer, PopSerializer, VideoSerializer
 
 # CACHE_TTL = getattr(settings, "CACHE_TTL", None)
 
@@ -82,5 +82,5 @@ class NoticeApiView(ListAPIView):
 
 class ExemplaryEssayApiView(ListAPIView):
     queryset = ExemplaryEssay.objects.all()
-    serializer_class = NoticeSerializer
+    serializer_class = ExemplaryEssaySerializer
     pagination_class = PageNumberPagination
